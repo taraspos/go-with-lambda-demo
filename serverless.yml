@@ -1,0 +1,27 @@
+service: go-with-lambda
+
+provider:
+  name: aws
+  runtime: go1.x
+  profile: max
+  timeout: 10
+
+package:
+  individually: true
+
+
+functions:
+  tick:
+    handler: bin/tick
+    events:
+      - http:
+          path: /
+          method: get
+    environment:
+      FW_MODE: process
+    package:
+      exclude:
+        - ./**
+      include:
+        - ./bin/tick
+        - ./bin/fw
